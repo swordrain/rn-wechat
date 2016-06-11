@@ -7,12 +7,14 @@ import {
   Animated,
   LayoutAnimation
 } from 'react-native';
+import PopMenuItem from './PopMenuItem';
 
 var styles = StyleSheet.create({
 	popMenu: {
 		backgroundColor: 'rgb(26, 31, 33)',
 		position:'absolute',
-		top: 50,
+		width: 200,
+		height: 250,
 		right: 10,
 	}
 })
@@ -21,38 +23,48 @@ export default class PopMenu extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			scale: 0,
-			width: 0,
-			height: 0
+			scale: new Animated.Value(0),
+			top: new Animated.Value(-100),
 		}
 	}
 
 
 	componentDidMount() {
-		//Animated动画目前无法改变transform origin，只能使用如下方式
-		var intervalId = setInterval(()=>{
-			this.setState({
-				width: this.state.width + 20,
-				height: this.state.height + 25
-			});
+		Animated.parallel([
+		Animated.timing(                          
+	      this.state.top,                 
+	      {
+	        toValue: 50,
+	        duration: 100                    
+	      }
+	    ),
+		Animated.timing(                          
+	      this.state.scale,                 
+	      {
+	        toValue: 1,
+	        duration: 100                    
+	      }
+	    )
 
-			if(this.state.width >=200 ){
-				clearInterval(intervalId);
-			}
+	    ]).start();    
 
 
-		}, 10);
 	}
 
+
 	render() {
-	return(<View style={[styles.popMenu, {
-			width: this.state.width,
-			height: this.state.height
+	return(<Animated.View style={[styles.popMenu, {
+			top: this.state.top,
+			transform: [                        // `transform`是一个有序数组（动画按顺序执行）
+            {scale: this.state.scale},  // 将`bounceValue`赋值给 `scale`
+          ]
 		}
 		]}>
-
-
-
-		</View>);
+			<PopMenuItem title="发起群聊" />
+			<PopMenuItem title="添加朋友" />
+			<PopMenuItem title="扫一扫" />
+			<PopMenuItem title="收付款" />
+			<PopMenuItem title="帮助与反馈" />
+		</Animated.View>);
 	}
 }
