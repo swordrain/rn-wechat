@@ -9,49 +9,29 @@ import {
 
 var styles = StyleSheet.create({
 	container: {
-		height: 70,
-		flexDirection: 'row',
-		paddingLeft: 10,
-		paddingRight: 10,
-		paddingTop: 10,
-		paddingBottom: 10,
-		//alignItems:'center',
-		borderBottomColor: 'lightgrey',
-		borderBottomWidth: 1
-	},
-	image: {
 		height: 50,
-		width: 50,
-
-	},
-	main: {
-		flex: 1,
-		paddingTop: 3,
+		flexDirection: 'row',
+		alignItems:'center',
 		paddingLeft: 15
+		
+	},
+	icon: {
+		height: 35,
+		width: 35,
+		marginRight: 10
 	},
 	name: {
-		fontSize: 18,
-		marginBottom: 5
-	},
-	lastMessage: {
-		color: 'gray',
-		fontSize: 13
-	},
-	time: {
-		marginTop: 10,
-		color: 'gray',
-		fontSize: 13
+		fontSize: 14
 	}
-})
+});
 
-export default class ChatItem extends Component{
-
-
+export default class ContactsItem extends Component{
 
 	render() {
+		console.log(this.props);
 		var icon;
 		//Image只认静态字符串资源
-		switch(this.props.icon){
+		switch(this.props.item.icon){
 			case "Arya": 
 			 	icon = require("../image/Arya.jpg");
 			 	break;
@@ -82,20 +62,35 @@ export default class ChatItem extends Component{
 		 	case "Tyrion": 
 			 	icon = require("../image/Tyrion.jpg");
 			 	break;
+			case "new":
+				icon = require("../image/new.png");
+				break;
+			case "users":
+				icon = require("../image/users.png");
+				break;
+			case "tag":
+				icon = require("../image/tag.png");
+				break;
+			case "public":
+				icon = require("../image/public.png");
+				break;
+			case "enterprise":
+				icon = require("../image/enterprise.png");
+				break;
 		}
 
-		return(<View style={styles.container}>
-				<Image resizeMode='cover' source={icon} style={styles.image} />
-				<View style={styles.main}>
-					<Text numberOfLines={1} style={styles.name}>{this.props.name}</Text>
-					<Text numberOfLines={1} style={styles.lastMessage}>{this.props.lastMessage}</Text>
-				</View>
-				<Text style={styles.time}>{this.props.time}</Text>
-
+		var borderBottomStyle = this.props.isLast? null: {borderBottomColor: 'lightgrey',
+		borderBottomWidth: 1,};
+		if(this.props.item){
+			return(<View style={[styles.container, borderBottomStyle]}>
+				<Image resizeMode='cover' style={styles.icon} source={icon} />
+				<Text numberOfLines={1} style={styles.name}>
+					{this.props.item.name}
+				</Text>
 
 			</View>)
-
-
-
+		}
 	}
+
+
 }
