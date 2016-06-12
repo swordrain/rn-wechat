@@ -44,15 +44,7 @@ var styles = StyleSheet.create({
 export default class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			showPopMenu: false
-		}
-	}
-
-	_showMenu() {
-		this.setState({
-			showPopMenu: !this.state.showPopMenu
-		})
+		
 	}
 
 	render() {
@@ -64,10 +56,10 @@ export default class Header extends Component {
 				<TouchableHighlight onPress={()=>{}} underlayColor='black' style={styles.headerIconButtonContainer}>
 					<Image style={styles.headerIconButton} source={require('../image/search.png')}/>
 				</TouchableHighlight>
-				<TouchableHighlight onPress={this._showMenu.bind(this)}  underlayColor='black' style={styles.headerIconButtonContainer}>
+				<TouchableHighlight onPress={this.props.toggleMenu}  underlayColor='black' style={styles.headerIconButtonContainer}>
 					<Image style={styles.headerIconButton} source={require('../image/add.png')}/>
 				</TouchableHighlight>
-				{ this.state.showPopMenu?(<PopMenu />): null}
+				
 			</View>
 			)
 	}

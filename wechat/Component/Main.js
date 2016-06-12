@@ -15,11 +15,14 @@ import Discovery from './Discovery';
 import Me from './Me';
 import MyTab from './MyTab';
 
+
+
 export default class Main extends Component {
 	constructor(props){
 	    super(props);
 	    this.state = {
-	    	index:1
+	    	index:1,
+	    	showPopMenu: false
 	    };
 	  }
 
@@ -31,6 +34,8 @@ export default class Main extends Component {
 	  _setActiveIndex(index) {
 	  	this.setState({index: index});
 	  }
+	  
+
 
 	render() {
 		//height= total-height 667 - statusbar 20 - header 50 - tabbar 45 = 552
@@ -43,6 +48,7 @@ export default class Main extends Component {
 	        		<Discovery />
 	        		<Me />
 	        	</MySwiper>
+	        	
 		      	<MyTab activeIndex={this.state.index} setActiveIndex={this._setActiveIndex.bind(this)}/>
 	      </View>
 	    );

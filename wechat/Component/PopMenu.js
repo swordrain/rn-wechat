@@ -34,7 +34,7 @@ export default class PopMenu extends Component{
 		Animated.timing(                          
 	      this.state.top,                 
 	      {
-	        toValue: 50,
+	        toValue: 70,
 	        duration: 100                    
 	      }
 	    ),
